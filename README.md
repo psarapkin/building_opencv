@@ -76,3 +76,32 @@ So, to build OpenCV with CUDA you have to specify:
 * path to GCC compiler version 13.2 - for C building objects
 * path to G++ compiler version 13.2 - for CXX building objects
 * CUDA detection flags
+
+Now we know everything we need, so let's do it. 
+
+First of all, we need to specify path to GCC. And we'll do that via environment variable:
+```
+export CC=gcc-13.2
+```
+
+Also, we have to specify CXX compiler, let's do that. We'll use g++. 
+
+```
+export CXX=g++-13.2
+```
+
+Then we need to specify CUDA detection flags - this is a parameter for cmake, but let's see it. 
+
+```
+-DOPENCV_CUDA_DETECTION_NVCC_FLAGS="-ccbin;/usr/bin/gcc-13.2"
+```
+
+Now, let's put this parameter under microscope, what is going on here. So the ccbin is the parameter for nvcc for specifying C compiler. Don't see at semicolon, when this parameter passing to nvcc, semicolon disapear. So, it seems like "-ccbin /usr/bin/gcc-13.2". If you don't pass this parameter, the cuda compiler (nvcc) will use gcc version 14, and it will lead to an error. Of course, you can pass "--allow-unsupported-compiler" to nvcc, but it will lead to error too. 
+
+So, the final command to configure cmake build is: 
+
+```
+cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-5.x/modules -DCMAKE_INSTALL_PREFIX=<path to install OpenCV> -DWITH_QT=OFF -DWITH_OPENGL=ON -DWITH_CUDA=ON -DOPENCV_CMAKE_CUDA_DEBUG=1 -DOPENCV_CUDA_DETECTION_NVCC_FLAGS="-ccbin;/usr/bin/gcc-13.2" -DCUDA_VERBOSE_BUILD=ON ../opencv-5.x 
+```
+
+Look at this command. I switched off Qt, and I don't have path to VTK_DIR, cause I couldn't build it with CUDA. 
