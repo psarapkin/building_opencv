@@ -28,3 +28,18 @@ So, the first command that you should run is this.
 ```
 cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-5.x/modules -DCMAKE_INSTALL_PREFIX=<path to where you want to install opencv> -DWITH_QT=ON -DWITH_OPENGL=ON -DWITH_CUDA=OFF ../opencv-5.x
 ```
+
+And the first problem that I see, is that I don't have VTK support:
+
+This is the result of cmake. 
+
+```
+VTK support:                 NO
+```
+
+But I would like to have VTK support. Of course the simplest way is to install it from package manager, in my case - dnf install vtk. But this VTK is build with GCC-14 and it will be the cause of problems. So, I have to build VTK by myself. 
+
+And this is my command to build VTK
+```
+cmake -DCMAKE_INSTALL_PREFIX=<path to where you want to install VTK> ../VTK-9.4.0.rc3/
+```
