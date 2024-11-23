@@ -21,3 +21,10 @@ So, what does it means for us. We can divide building OpenCV for two big parts:
 
 P.S. VTK gave me error, I had to remove it from system. I think the problem is that VTK built with GCC 14... May be I should build VTK by myself and use GCC-13.2 for it.
 
+The start point for us of course is OpenCV documentation - https://docs.opencv.org/5.x/d7/d9f/tutorial_linux_install.html . 
+We think that you downloaded opencv source code and opencv_contrib modules.
+
+So, the first command that you should run is this. 
+```
+cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-5.x/modules -DCMAKE_INSTALL_PREFIX=<path to where you want to install opencv> -DWITH_QT=ON -DWITH_OPENGL=ON -DWITH_CUDA=OFF ../opencv-5.x
+```
