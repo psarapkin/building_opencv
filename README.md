@@ -105,3 +105,20 @@ cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-5.x/modules -DCMAKE_INSTALL_
 ```
 
 Look at this command. I switched off Qt, and I don't have path to VTK_DIR, cause I couldn't build it with CUDA. 
+
+After that we run
+```
+cmake --build . --parallel $(nproc)
+```
+
+
+Finally, I almost have built OpenCV with CUDA support, but I ran **cmake --build** twice because of error:
+
+```
+nvcc error   : '"$CICC_PATH/cicc"' died due to signal 11 (Invalid memory reference)
+nvcc error   : '"$CICC_PATH/cicc"' core dumped
+
+```
+
+It seems the process doesn't have enough memory... But, I have 128Gb... It looks ridiculous but it took place)) 
+
