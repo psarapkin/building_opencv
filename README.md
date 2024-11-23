@@ -43,3 +43,12 @@ And this is my command to build VTK
 ```
 cmake -DCMAKE_INSTALL_PREFIX=<path to where you want to install VTK> ../VTK-9.4.0.rc3/
 ```
+
+Well, of course the upper command was the command to configure build. And the next command is for build:
+
+```
+cmake --build . --parallel $(nproc)
+```
+
+And after that we need to run **make install** to install VTK to destination folder.
+
