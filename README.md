@@ -1,5 +1,7 @@
 # Building OpenCV (with Cuda)
 
+## Introduction
+
 At this page I would like to gather information about building OpenCV lib and pitfalls that I met and how I solved it (or maybe not, and may be smbd help me). I build OpenCV libs only for Linux and MacOS. When I started writing this README, I used Fedora 41. Information on the internet about building OpenCV and how to solve problems is scattered, so, I had to collect it bit by bit (several times). And after some times I decided to write about it, mostly for myself, but I would be glad if it would be useful for somebody else.
 
 So, if we talk about spherical horse in the vacuum, I would like to build OpenCV with
@@ -20,6 +22,8 @@ So, what does it means for us. We can divide building OpenCV for two big parts:
 2.  With CUDA (but without QT and VTK)
 
 P.S. VTK gave me error, I had to remove it from system. I think the problem is that VTK built with GCC 14... May be I should build VTK by myself and use GCC-13.2 for it.
+
+## Building OpenCV without CUDA
 
 The start point for us of course is OpenCV documentation - https://docs.opencv.org/5.x/d7/d9f/tutorial_linux_install.html . 
 We think that you downloaded opencv source code and opencv_contrib modules.
@@ -50,5 +54,25 @@ Well, of course the upper command was the command to configure build. And the ne
 cmake --build . --parallel $(nproc)
 ```
 
-And after that we need to run **make install** to install VTK to destination folder.
+And after that we need to run **make install** to install VTK to destination folder. But, for building OpenCV we need VTK build folder (not install). And that folder we need to pass via VTK_DIR parameter for CMake. So, the final command to configure OpenCV with VTK is: 
 
+```
+cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-5.x/modules -DCMAKE_INSTALL_PREFIX=<path to install folder for opencv> -DWITH_QT=ON -DWITH_OPENGL=ON -DWITH_CUDA=OFF -DVTK_DIR=<VTK build dir> ../opencv-5.x
+```
+
+And after that we run **make install**, and finally we have OpenCV with QT, VTK, FFMPEG and so on.
+
+P.S. We have built VTK without CUDA, cause I couldn't pass to VTK build system the path for gcc previous version (13). May be I solve this later, or may be somebody would help me. 
+
+
+## Building OpenCV with CUDA
+
+Well, I've already built OpenCV with CUDA, and now I know a plenty of pitfalls (may be not all), and that's why now I think that it's simple. But to get to know what to do I had to read a lot of pages, I had to read CMake files (that I have never do), and so on. But the root of all evil is that the CUDA doesn't work with newer versions of GCC. And everything is connected with it. No, no, not like that - EVERYTHING. So, in that case you have following problems. 
+
+*  First of all, you have two options - if you want to work with CUDA - you should forget about system updates. Or if you want newer version of system, but in that case you have to solve problems)).  Well, I use Fedora, and as said earlier, Fedora has releases twice a year. May be Debian is the solution, or may be Linux Mint Debian Edition (LMDE). I've just checked, and I see that LMDE Faye 6 has gcc 12.2 version (and Debian too), but Fedora 41 has gcc-14.3 version. But I have some reasons to use Fedora.
+*  If you use CUDA with gcc 13.3, on the system with gcc 14.3, then you will have problems with some libraries from repositories, for example - Qt, VTK... Qt and VTK for Fedora 41 it seems is built on gcc 14.3. In my case, I couldn't build OpenCV with QT and VTK.
+
+So, to build OpenCV with CUDA you have to specify:
+* path to GCC compiler version 13.2 - for C building objects
+* path to G++ compiler version 13.2 - for CXX building objects
+* CUDA detection flags
