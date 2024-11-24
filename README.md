@@ -1,4 +1,4 @@
-# Building OpenCV (with Cuda)
+# Building OpenCV (with CUDA)
 
 ## Introduction
 
