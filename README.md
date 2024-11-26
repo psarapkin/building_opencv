@@ -2,7 +2,9 @@
 
 ## Introduction
 
-At this page I would like to gather information about building OpenCV lib and pitfalls that I met and how I solved it (or maybe not, and may be smbd help me). I build OpenCV libs only for Linux and MacOS. When I started writing this README, I used Fedora 41. Information on the internet about building OpenCV and how to solve problems is scattered, so, I had to collect it bit by bit (several times). And after some times I decided to write about it, mostly for myself, but I would be glad if it would be useful for somebody else.
+At this page I would like to gather information about building OpenCV lib and pitfalls that I met and how I solved it (or maybe not, and may be smbd help me). I build OpenCV libs only for Linux and MacOS. When I started writing this README, I used Fedora 41. Information on the internet about building OpenCV and how to solve problems is scattered, so, I had to collect it bit by bit (several times). And after some times I decided to write about it, mostly for myself, but I would be glad if it would be useful for somebody else. 
+
+Well, first of all, all this staff is for myself, like some notes in case if I forget how to do that. 
 
 So, if we talk about spherical horse in the vacuum, I would like to build OpenCV with
 
