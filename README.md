@@ -62,6 +62,12 @@ And after that we need to run **make install** to install VTK to destination fol
 cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-5.x/modules -DCMAKE_INSTALL_PREFIX=<path to install folder for opencv> -DWITH_QT=ON -DWITH_OPENGL=ON -DWITH_CUDA=OFF -DVTK_DIR=<VTK build dir> ../opencv-5.x
 ```
 
+Also, one more string to build opencv on Fedora Asahi Linux on Apple Sillicon
+
+```
+cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -DCMAKE_INSTALL_PREFIX=<path to prefix> -DWITH_QT=ON -DWITH_OPENGL=ON -DWITH_CUDA=OFF -DVTK_DIR=../build_vtk -DAVIF_INCLUDE_DIR=/usr/include/libavif -DAVIF_LIBRARY=/usr/lib64/libavif.so ../opencv
+```
+
 And after that we run **make install**, and finally we have OpenCV with QT, VTK, FFMPEG and so on.
 
 P.S. We have built VTK without CUDA, cause I couldn't pass to VTK build system the path for gcc previous version (13). May be I solve this later, or may be somebody would help me. 
